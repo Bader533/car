@@ -1,0 +1,110 @@
+@extends('dashboard.starter')
+@section('title', 'edit admin')
+@section('pageName', 'Edit admin')
+@section('css')
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link rel="stylesheet" href="{{ asset('asset/css/app2.css') }}">
+@endsection
+@section('content')
+<div class="div1">
+    <div class="div2">
+        <p class="textAdd">Edit Admin</p>
+    </div>
+    <form action="{{ route('admin.update', $admin->id) }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+        <div class="cardInput">
+
+            {{-- name --}}
+            <div class="divInput">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="name" class="@error('name') text-danger @enderror"
+                    value="{{ old('name', $admin->name) }}">
+                @error('name')
+                <p class="text-danger">{{ $errors->first('name') }}</p>
+                @enderror
+            </div><br>
+            {{-- end name --}}
+
+            {{-- email --}}
+            <div class="divInput">
+                <label for="email">Email</label>
+                <input type="text" name="email" value="{{ old('email', $admin->email) }}"
+                    class="@error('email') text-danger @enderror">
+                @error('email')
+                <p class="text-danger">{{ $errors->first('email') }}</p>
+                @enderror
+            </div><br>
+            {{-- end email --}}
+
+            {{-- phone --}}
+            <div class="divInput">
+                <label for="phone">phone</label>
+                <input type="text" name="phone" id="phone" value="{{ old('phone', $admin->phone) }}"
+                    class="@error('phone') text-danger @enderror">
+
+                @error('phone')
+                <p class="text-danger">{{ $errors->first('phone') }}</p>
+                @enderror
+            </div><br>
+            {{-- end phone --}}
+
+            {{-- password --}}
+            <div class="divInput">
+                <label for="password">password</label>
+                <input type="text" name="password" id="password" class="@error('password') text-danger @enderror">
+                @error('password')
+                <p class="text-danger">{{ $errors->first('password') }}</p>
+                @enderror
+            </div><br>
+            {{-- end password --}}
+        </div>
+
+        <div class="divButton">
+            <button type="submit" class="buttonAdd"> Edit </button>
+        </div>
+    </form>
+</div><br>
+
+@endsection
+@section('js')
+<script src="{{ asset('asset/js/app.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script>
+    @if (Session::has('message'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.success("{{ session('message') }}");
+        @endif
+
+        @if (Session::has('error'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.error("{{ session('error') }}");
+        @endif
+
+        @if (Session::has('info'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.info("{{ session('info') }}");
+        @endif
+
+        @if (Session::has('warning'))
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            toastr.warning("{{ session('warning') }}");
+        @endif
+</script>
+@endsection
